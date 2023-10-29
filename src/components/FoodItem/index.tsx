@@ -1,18 +1,12 @@
-import { Paragraph, Stack, XStack, getTokens } from 'tamagui'
-import { Circle } from '@tamagui/lucide-icons'
-
-interface FoodItem {
-  name: string
-  hour: string
-  type: 'diet' | 'not-diet'
-}
+import { MealsItem as MealItem } from '@store/useMeals'
+import { Paragraph, Stack, XStack } from 'tamagui'
 
 interface Props {
-  food: FoodItem
+  food: MealItem
   onPress?: () => void
 }
 
-export function FoodItem({ food: { name, hour, type }, onPress }: Props) {
+export function FoodItem({ food: { name, hour, is_at_diet }, onPress }: Props) {
   return (
     <XStack
       pressStyle={{ backgroundColor: '$base_500' }}
@@ -30,7 +24,7 @@ export function FoodItem({ food: { name, hour, type }, onPress }: Props) {
       <Stack borderLeftWidth={1} height={14} borderColor={'$base_400'} />
       <Paragraph flex={1}>{name}</Paragraph>
       <Paragraph>
-        {type === 'diet' ? (
+        {is_at_diet ? (
           <Stack
             bg={'$brand_green_200'}
             width={14}

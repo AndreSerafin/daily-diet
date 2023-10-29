@@ -3,7 +3,7 @@ import {
   NunitoSans_700Bold,
 } from '@expo-google-fonts/nunito-sans'
 import { useColorScheme } from 'react-native'
-import { Stack, TamaguiProvider, Theme } from 'tamagui'
+import { TamaguiProvider, Theme } from 'tamagui'
 import config from './tamagui.config'
 import { useFonts } from 'expo-font'
 import { ThemeProvider } from 'styled-components/native'
@@ -11,6 +11,8 @@ import { defaultColors } from '@theme/index'
 import { Routes } from '@routes/index'
 import { Loading } from '@components/Loading'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { QueryClientProvider } from 'react-query'
+import { queryClient } from '@services/queryClient'
 
 export default function App() {
   const colorScheme = useColorScheme()
@@ -27,14 +29,16 @@ export default function App() {
   }
 
   return (
-    <ThemeProvider theme={defaultColors}>
-      <TamaguiProvider config={config}>
-        <Theme name={colorScheme === 'dark' ? 'dark' : 'light'}>
-          <SafeAreaView style={{ flex: 1 }}>
-            {fontsLoaded ? <Routes /> : <Loading />}
-          </SafeAreaView>
-        </Theme>
-      </TamaguiProvider>
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider theme={defaultColors}>
+        <TamaguiProvider config={config}>
+          <Theme name={colorScheme === 'dark' ? 'dark' : 'light'}>
+            <SafeAreaView style={{ flex: 1 }}>
+              {fontsLoaded ? <Routes /> : <Loading />}
+            </SafeAreaView>
+          </Theme>
+        </TamaguiProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
   )
 }
